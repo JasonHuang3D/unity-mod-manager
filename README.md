@@ -8,3 +8,5 @@ This mod adds modding support for games created on Unity engine.
 - [dnlib](https://github.com/0xd4d/dnlib)
 - [Json.NET](https://www.newtonsoft.com/json)
 - [Ionic.Zip](https://archive.codeplex.com/?p=dotnetzip)
+
+### This is a modified version used for game  Amazing Cultivation Simulator

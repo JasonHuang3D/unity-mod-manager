@@ -418,6 +418,7 @@ namespace UnityModManagerNet.Installer
                 disabledMethods.Add(InstallType.DoorstopProxy);
                 selectedGameParams.InstallType = InstallType.Assembly;
             }
+            selectedGameParams.InstallType = InstallType.Assembly;
 
             foreach (var ctrl in installTypeGroup.Controls)
             {
@@ -647,7 +648,7 @@ namespace UnityModManagerNet.Installer
         private void btnOpenFolder_Click(object sender, EventArgs e)
         {
             var result = folderBrowserDialog.ShowDialog();
-            if (result == DialogResult.OK)
+            if (result == true)
             {
                 selectedGameParams.Path = folderBrowserDialog.SelectedPath;
                 RefreshForm();

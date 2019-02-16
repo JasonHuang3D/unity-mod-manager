@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 namespace UnityModManagerNet.Installer
 {
     public enum ModStatus { NotInstalled, Installed }
-    public enum InstallType { Assembly, DoorstopProxy, /*Config,*/ Count }
+    public enum InstallType { Assembly, Count,DoorstopProxy, /*Config,*/  }
 
     public class ModInfo : UnityModManager.ModInfo
     {
@@ -168,6 +168,9 @@ namespace UnityModManagerNet.Installer
                     Log.Print(e.ToString());
                 }
             }
+            else
+            {
+            }
             return null;
         }
 
@@ -185,7 +188,7 @@ namespace UnityModManagerNet.Installer
             [XmlAttribute]
             public string Name;
             public string Path;
-            public InstallType InstallType = InstallType.DoorstopProxy;
+            public InstallType InstallType = InstallType.Assembly;
         }
 
         public string LastSelectedGame;

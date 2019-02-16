@@ -95,30 +95,31 @@ namespace UnityModManagerNet
 
         private static IEnumerator DownloadString(string url, UnityAction<string, string> handler)
         {
-            var www = UnityWebRequest.Get(url);
+            return null;
+            //var www = UnityWebRequest.Get(url);
 
-            yield return www.Send();
-
-            MethodInfo isError;
-
-            var ver = ParseVersion(Application.unityVersion);
-            if (ver.Major >= 2017)
-            {
-                isError = typeof(UnityWebRequest).GetMethod("get_isNetworkError");
-            }
-            else
-            {
-                isError = typeof(UnityWebRequest).GetMethod("get_isError");
-            }
-
-            if (isError == null || (bool)isError.Invoke(www, null))
-            {
-                Logger.Log(www.error);
-                Logger.Log(string.Format("Error downloading '{0}'.", url));
-                yield break;
-            }
-
-            handler(www.downloadHandler.text, url);
+           // yield return www.Send();
+           //
+           // MethodInfo isError;
+           //
+           // var ver = ParseVersion(Application.unityVersion);
+           // if (ver.Major >= 2017)
+           // {
+           //     //isError = typeof(UnityWebRequest).GetMethod("get_isNetworkError");
+           // }
+           // else
+           // {
+           //    // isError = typeof(UnityWebRequest).GetMethod("get_isError");
+           // }
+           //
+           //// if (isError == null || (bool)isError.Invoke(www, null))
+           //// {
+           //    // Logger.Log(www.error);
+           //    // Logger.Log(string.Format("Error downloading '{0}'.", url));
+           //     //yield break;
+           // }
+           //
+           // //handler(www.downloadHandler.text, url);
         }
     }
 }

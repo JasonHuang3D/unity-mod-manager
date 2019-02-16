@@ -63,7 +63,7 @@
             this.inputLog = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.folderBrowserDialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog();
             this.modInstallFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.panelMain.SuspendLayout();
             this.splitContainerMain.Panel1.SuspendLayout();
@@ -135,7 +135,7 @@
             this.tabPage1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tabPage1.Controls.Add(this.installTypeGroup);
             this.tabPage1.Controls.Add(this.btnRestore);
-            this.tabPage1.Controls.Add(this.btnDownloadUpdate);
+            //this.tabPage1.Controls.Add(this.btnDownloadUpdate);
             this.tabPage1.Controls.Add(this.btnRemove);
             this.tabPage1.Controls.Add(this.btnOpenFolder);
             this.tabPage1.Controls.Add(this.gameList);
@@ -479,7 +479,7 @@
             // folderBrowserDialog
             // 
             this.folderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
-            this.folderBrowserDialog.HelpRequest += new System.EventHandler(this.folderBrowserDialog_HelpRequest);
+            //this.folderBrowserDialog.HelpRequest += new System.EventHandler(this.folderBrowserDialog_HelpRequest);
             // 
             // modInstallFileDialog
             // 
@@ -529,7 +529,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox gameList;
         private System.Windows.Forms.Button btnOpenFolder;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private Ookii.Dialogs.Wpf.VistaFolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button btnRemove;

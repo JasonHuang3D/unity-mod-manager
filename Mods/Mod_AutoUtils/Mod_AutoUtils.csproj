@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2E3F607A-9D99-4B98-90AF-FC03F7C26BAE}</ProjectGuid>
+    <ProjectGuid>{10812782-F5EA-47B6-9614-15FF4730AAF8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mod_PaintFu</RootNamespace>
-    <AssemblyName>Mod_PaintFu</AssemblyName>
+    <RootNamespace>Mod_AutoUtils</RootNamespace>
+    <AssemblyName>Mod_AutoUtils</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>D:\Program Files %28x86%29\Steam\steamapps\common\AmazingCultivationSimulator\CSharpMods\Mod_PaintFu\</OutputPath>
+    <OutputPath>D:\Program Files %28x86%29\Steam\steamapps\common\AmazingCultivationSimulator\CSharpMods\Mod_CrystalPowerUp\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>D:\Program Files %28x86%29\Steam\steamapps\common\AmazingCultivationSimulator\CSharpMods\Mod_PaintFu\</OutputPath>
+    <OutputPath>D:\Program Files %28x86%29\Steam\steamapps\common\AmazingCultivationSimulator\CSharpMods\Mod_AutoUtils\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -84,8 +84,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mod_PaintFu.cs" />
+    <Compile Include="Mod_AutoUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="info.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\UnityModManager\UnityModManager.csproj">
@@ -93,11 +98,6 @@
       <Name>UnityModManager</Name>
       <Private>False</Private>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="info.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

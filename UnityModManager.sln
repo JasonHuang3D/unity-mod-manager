@@ -9,7 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityModManagerApp", "Unity
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityModManager", "UnityModManager\UnityModManager.csproj", "{A1FCAE3E-523E-4E33-8860-DD39DDDF0F62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mod_PaintFu", "Mods\Test\Mod_PaintFu.csproj", "{2E3F607A-9D99-4B98-90AF-FC03F7C26BAE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mods", "Mods", "{D6AA5E96-62BD-4D61-A80A-31D90F1F241F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mod_PaintFu", "Mods\Mod_PaintFu\Mod_PaintFu.csproj", "{2E3F607A-9D99-4B98-90AF-FC03F7C26BAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mod_CrystalPowerUp", "Mods\Mod_CrystalPowerUp\Mod_CrystalPowerUp.csproj", "{2C69DAA4-B60A-4EB5-B74A-66987AD88D35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mod_AutoUtils", "Mods\Mod_AutoUtils\Mod_AutoUtils.csproj", "{10812782-F5EA-47B6-9614-15FF4730AAF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,9 +57,30 @@ Global
 		{2E3F607A-9D99-4B98-90AF-FC03F7C26BAE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2E3F607A-9D99-4B98-90AF-FC03F7C26BAE}.Release|x64.ActiveCfg = Release|Any CPU
 		{2E3F607A-9D99-4B98-90AF-FC03F7C26BAE}.Release|x64.Build.0 = Release|Any CPU
+		{2C69DAA4-B60A-4EB5-B74A-66987AD88D35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C69DAA4-B60A-4EB5-B74A-66987AD88D35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C69DAA4-B60A-4EB5-B74A-66987AD88D35}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2C69DAA4-B60A-4EB5-B74A-66987AD88D35}.Debug|x64.Build.0 = Debug|Any CPU
+		{2C69DAA4-B60A-4EB5-B74A-66987AD88D35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C69DAA4-B60A-4EB5-B74A-66987AD88D35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C69DAA4-B60A-4EB5-B74A-66987AD88D35}.Release|x64.ActiveCfg = Release|Any CPU
+		{2C69DAA4-B60A-4EB5-B74A-66987AD88D35}.Release|x64.Build.0 = Release|Any CPU
+		{10812782-F5EA-47B6-9614-15FF4730AAF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10812782-F5EA-47B6-9614-15FF4730AAF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10812782-F5EA-47B6-9614-15FF4730AAF8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{10812782-F5EA-47B6-9614-15FF4730AAF8}.Debug|x64.Build.0 = Debug|Any CPU
+		{10812782-F5EA-47B6-9614-15FF4730AAF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10812782-F5EA-47B6-9614-15FF4730AAF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10812782-F5EA-47B6-9614-15FF4730AAF8}.Release|x64.ActiveCfg = Release|Any CPU
+		{10812782-F5EA-47B6-9614-15FF4730AAF8}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2E3F607A-9D99-4B98-90AF-FC03F7C26BAE} = {D6AA5E96-62BD-4D61-A80A-31D90F1F241F}
+		{2C69DAA4-B60A-4EB5-B74A-66987AD88D35} = {D6AA5E96-62BD-4D61-A80A-31D90F1F241F}
+		{10812782-F5EA-47B6-9614-15FF4730AAF8} = {D6AA5E96-62BD-4D61-A80A-31D90F1F241F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {493AB97B-25A0-4606-B8BA-5E81E4CAE897}

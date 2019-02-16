@@ -56,20 +56,17 @@ namespace Mod_PaintFu
 
         static void OnGUI(UnityModManager.ModEntry modEntry)
         {
-
-
             GUIStyle txtFieldStyle = GUI.skin.textField;
             txtFieldStyle.alignment = TextAnchor.MiddleCenter;
 
             GUILayout.BeginHorizontal();
 
-
             GUILayout.Label("画符品质", new GUILayoutOption[0]);
             GUILayout.Label((settings.fuRate).ToString() + "%", txtFieldStyle, GUILayout.Width(40));
 
             settings.fuRate = (uint)(GUILayout.HorizontalSlider(settings.fuRate, 1, 200, GUILayout.Width(200)));
-        
             GUILayout.FlexibleSpace();
+
             GUILayout.EndHorizontal();
            
         }
@@ -131,14 +128,9 @@ namespace Mod_PaintFu
         public static void new_QuickP()
         {
             var _this = Traverse.Create(Wnd_FuPatinter.Instance);
-            
-            var _callBack = _this.Field("CallBack").GetValue<Action<string, float, Texture2D, bool>>();
-            
-            if(_callBack != null)
-            {
-                _callBack(_this.Field("SelectName").GetValue<string>(), Main.settings.fuRate / 100.0f, null, false);
-            }
-            
+
+            _this.Field("CallBack").GetValue<Action<string, float, Texture2D, bool>>()?.Invoke(_this.Field("SelectName").GetValue<string>(), Main.settings.fuRate / 100.0f, null, false);
+
             Wnd_FuPatinter.Instance.Hide();
         }
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
@@ -147,14 +139,14 @@ namespace Mod_PaintFu
             var codes = new List<CodeInstruction>(instructions);
     
             int startIndex = 0;
-    
-    
-            var injectedCodes = new List<CodeInstruction>();
-    
-    
-            injectedCodes.Add(new CodeInstruction(OpCodes.Call, typeof(Wnd_FuPatinter_QuickP_Patch).GetMethod("new_QuickP")));
-            injectedCodes.Add(new CodeInstruction(OpCodes.Ret));
-    
+
+
+            var injectedCodes = new List<CodeInstruction>
+            {
+                new CodeInstruction(OpCodes.Call, typeof(Wnd_FuPatinter_QuickP_Patch).GetMethod("new_QuickP")),
+                new CodeInstruction(OpCodes.Ret)
+            };
+
             codes.InsertRange(startIndex, injectedCodes);
     
     

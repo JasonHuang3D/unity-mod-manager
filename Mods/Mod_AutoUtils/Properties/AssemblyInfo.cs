@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Mod_PaintFu")]
+[assembly: AssemblyTitle("Mod_AutoUtils")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Mod_PaintFu")]
+[assembly: AssemblyProduct("Mod_AutoUtils")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("2e3f607a-9d99-4b98-90af-fc03f7c26bae")]
+[assembly: Guid("2c69daa4-b60a-4eb5-b74a-89283ad88d35")]
 
 // Version information for an assembly consists of the following four values:
 //

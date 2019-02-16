@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityModManagerApp", "Unity
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityModManager", "UnityModManager\UnityModManager.csproj", "{A1FCAE3E-523E-4E33-8860-DD39DDDF0F62}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mod_PaintFu", "Mods\Test\Mod_PaintFu.csproj", "{2E3F607A-9D99-4B98-90AF-FC03F7C26BAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,14 @@ Global
 		{A1FCAE3E-523E-4E33-8860-DD39DDDF0F62}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A1FCAE3E-523E-4E33-8860-DD39DDDF0F62}.Release|x64.ActiveCfg = Release|x64
 		{A1FCAE3E-523E-4E33-8860-DD39DDDF0F62}.Release|x64.Build.0 = Release|x64
+		{2E3F607A-9D99-4B98-90AF-FC03F7C26BAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E3F607A-9D99-4B98-90AF-FC03F7C26BAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E3F607A-9D99-4B98-90AF-FC03F7C26BAE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2E3F607A-9D99-4B98-90AF-FC03F7C26BAE}.Debug|x64.Build.0 = Debug|Any CPU
+		{2E3F607A-9D99-4B98-90AF-FC03F7C26BAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E3F607A-9D99-4B98-90AF-FC03F7C26BAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E3F607A-9D99-4B98-90AF-FC03F7C26BAE}.Release|x64.ActiveCfg = Release|Any CPU
+		{2E3F607A-9D99-4B98-90AF-FC03F7C26BAE}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,8 @@
+﻿{
+  "Id": "Mod_PaintFu",
+  "DisplayName": "一键画符",
+  "Author": "JasonHuang",
+  "Version": "1.0.0",
+  "AssemblyName": "Mod_PaintFu.dll",
+  "EntryMethod": "Mod_PaintFu.Main.Load"
+}

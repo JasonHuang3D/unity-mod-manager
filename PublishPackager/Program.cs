@@ -70,12 +70,12 @@ namespace PublishPackager
                     {
 
                         var modPublishPath = Path.Combine(s_publishPath, Path.Combine(s_modPublishPath, modName + ".zip"));
-                        var zip = new ZipFile();
-
-                        zip.AddFile(modDllFilePath, "./");
-                        zip.AddFile(modInfoFilePath, "./");
-                        zip.Save(modPublishPath);
-
+                        using (var zip = new ZipFile())
+                        {
+                            zip.AddFile(modDllFilePath,modName+"/");
+                            zip.AddFile(modInfoFilePath, modName + "/");
+                            zip.Save(modPublishPath);
+                        }
 
 
                         Console.WriteLine(string.Format("Mod: '{0}' packed successfully to {1}", modName, modPublishPath));

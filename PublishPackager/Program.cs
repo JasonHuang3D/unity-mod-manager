@@ -15,7 +15,7 @@ namespace PublishPackager
         public static string s_gamePath = @"D:\Program Files (x86)\Steam\steamapps\common\AmazingCultivationSimulator";
         public static string s_gameModsRootFolder = "CSharpMods";
         public static string s_gameModsRootPath = Path.Combine(s_gamePath, s_gameModsRootFolder);
-        public static string s_modPublishPath = Path.Combine(s_publishPath,"mods");
+        public static string s_modPublishPath = Path.Combine(s_publishPath, "mods");
 
         public static string[] s_modsList =
          {
@@ -45,12 +45,11 @@ namespace PublishPackager
                 var mangerAppfiles = Directory.GetFiles(s_managerAppPath, "*.*")
                             .Where(s => s.EndsWith(".dll") || s.EndsWith(".exe") || s.EndsWith(".xml"));
 
-                using (var zip = new ZipFile())
-                {
-                    zip.AddFiles(mangerAppfiles, false, "./");
-                    zip.Save(s_managerZipFilePath);
-                    Console.WriteLine(string.Format("App: '{0}' packed successfully", s_managerZipFilePath));
-                }
+                var zip = new ZipFile();
+                zip.AddFiles(mangerAppfiles, false, "./");
+                zip.Save(s_managerZipFilePath);
+                Console.WriteLine(string.Format("App: '{0}' packed successfully", s_managerZipFilePath));
+
             }
 
             bool result = true;
@@ -71,15 +70,15 @@ namespace PublishPackager
                     {
 
                         var modPublishPath = Path.Combine(s_publishPath, Path.Combine(s_modPublishPath, modName + ".zip"));
-                        using (var zip = new ZipFile())
-                        {
-                            zip.AddFile(modDllFilePath, "./");
-                            zip.AddFile(modInfoFilePath, "./");
-                            zip.Save(modPublishPath);
+                        var zip = new ZipFile();
 
-                        }
+                        zip.AddFile(modDllFilePath, "./");
+                        zip.AddFile(modInfoFilePath, "./");
+                        zip.Save(modPublishPath);
 
-                        Console.WriteLine(string.Format("Mod: '{0}' packed successfully to {1}",modName, modPublishPath));
+
+
+                        Console.WriteLine(string.Format("Mod: '{0}' packed successfully to {1}", modName, modPublishPath));
                     }
                     else
                     {
@@ -90,7 +89,7 @@ namespace PublishPackager
 
             }
 
-            if(!result) Console.ReadKey();
+            if (!result) Console.ReadKey();
 
         }
         private static string[] GetFiles(string sourceFolder, string filters, System.IO.SearchOption searchOption)

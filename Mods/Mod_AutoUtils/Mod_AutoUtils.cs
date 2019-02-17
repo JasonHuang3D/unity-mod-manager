@@ -19,6 +19,8 @@ namespace Mod_AutoUtils
         public bool autoMoveBodies = true;
         public bool autoSlaughtAnimals = true;
 
+        public bool showLing = true;
+
         public override void Save(UnityModManager.ModEntry modEntry)
         {
             Save(this, modEntry);
@@ -74,6 +76,9 @@ namespace Mod_AutoUtils
             settings.autoSlaughtAnimals = GUILayout.Toggle(settings.autoSlaughtAnimals, "自动屠宰动物", new GUILayoutOption[0]);
             GUILayout.Space(10);
 
+            settings.showLing = GUILayout.Toggle(settings.showLing, "显示灵气数值", new GUILayoutOption[0]);
+            GUILayout.Space(10);
+
             GUILayout.FlexibleSpace();
 
             GUILayout.EndHorizontal();
@@ -115,6 +120,84 @@ namespace Mod_AutoUtils
                     });
                 }
             }
+        }
+    }
+
+    [HarmonyPatch(typeof(Wnd_GameMain), "UpdateGridInfo")]
+    public static class Wnd_GameMain_UpdateGridInfo_Patch
+    {
+        public static void new_UpdateGridInfo(Wnd_GameMain __instance)
+        {
+            if (UI_WorldLayer.Instance == null)
+                return;
+
+            int mouseGridKey = UI_WorldLayer.Instance.MouseGridKey;
+
+            var _this = Traverse.Create(__instance);
+
+            if (_this.Field("lastkey").GetValue<int>() == mouseGridKey)
+                return;
+
+            _this.Field("lastkey").SetValue(mouseGridKey);
+
+            Map map = WorldMgr.Instance.curWorld.map;
+            if (GridMgr.Inst.KeyVaild(mouseGridKey))
+            {
+                if (!map.IsInDark(mouseGridKey, true))
+                {
+                    float temperature = map.GetTemperature(mouseGridKey);
+                    string terrainName = map.Terrain.GetTerrainName(mouseGridKey, true);
+                    TerrainDef terrain = map.Terrain.GetTerrain(mouseGridKey);
+                    __instance.UIInfo.m_n32.text = string.Format("{0}{8}{6}\n{1}\n{2}\n{4}\n{3}{5}({7:f1}℃)", new object[]
+                    {
+                    map.Terrain.GetTerrainName(mouseGridKey, false),
+                    GameDefine.GetValueByMap<string>(GameDefine.FertilityDesc, map.GetFertility(mouseGridKey)),
+                    GameDefine.GetValueByMap<string>(GameDefine.BeautyDesc, map.GetBeauty(mouseGridKey, true)),
+                    GameDefine.GetValueByMap<string>(GameDefine.TemperatureDesc, temperature),
+                    GameDefine.GetValueByMap<string>(GameDefine.LightDesc, map.GetLight(mouseGridKey)),
+                    (AreaMgr.Instance.CheckArea(mouseGridKey, "Room") == null) ? string.Empty : "(室)",
+                    (!string.IsNullOrEmpty(terrainName)) ? ("(" + terrainName + ")") : string.Empty,
+                    temperature,
+                    (!terrain.IsWater || map.Snow.GetSnow(mouseGridKey) < 200) ? string.Empty : "(冰)"
+                    });
+                }
+                else
+                {
+                    __instance.UIInfo.m_n32.text = "未探索";
+                }
+            }
+            else
+            {
+                __instance.UIInfo.m_n32.text = "未探索";
+            }
+            if (__instance.openFengshui && GridMgr.Inst.KeyVaild(mouseGridKey))
+            {
+                float[] elementProportion = map.GetElementProportion(mouseGridKey);
+                for (int i = 1; i < elementProportion.Length - 1; i++)
+                {
+                    __instance.UIInfo.m_ElementShow.GetChild("E" + (i - 1)).asProgress.value = (double)(elementProportion[i] * 100f);
+                }
+            }
+        }
+        static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            Main.Logger.Log(" Wnd_GameMain_UpdateGridInfo_Patch Transpiler init codes ");
+            var codes = new List<CodeInstruction>(instructions);
+
+            int startIndex = 0;
+
+
+            var injectedCodes = new List<CodeInstruction>
+            {
+                new CodeInstruction(OpCodes.Ldarg_0),
+                new CodeInstruction(OpCodes.Call, typeof(Wnd_GameMain_UpdateGridInfo_Patch).GetMethod("new_UpdateGridInfo")),
+                new CodeInstruction(OpCodes.Ret)
+            };
+
+            codes.InsertRange(startIndex, injectedCodes);
+
+
+            return codes.AsEnumerable();
         }
     }
 }

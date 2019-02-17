@@ -216,7 +216,7 @@ namespace UnityModManagerNet.Installer
                         File.Delete(filepath);
                     }
                 }
-                foreach(var entry in zip.EntriesSorted)
+                foreach (var entry in zip.EntriesSorted)
                 {
                     if (entry.IsDirectory)
                     {

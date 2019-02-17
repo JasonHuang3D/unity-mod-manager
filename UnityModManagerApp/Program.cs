@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace UnityModManagerNet.Installer
 {
-    static class Program
+    public static class UnityModManagerApp
     {
         /// <summary>
         /// Главная точка входа для приложения.

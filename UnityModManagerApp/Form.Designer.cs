@@ -135,7 +135,7 @@
             this.tabPage1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tabPage1.Controls.Add(this.installTypeGroup);
             this.tabPage1.Controls.Add(this.btnRestore);
-            //this.tabPage1.Controls.Add(this.btnDownloadUpdate);
+            this.tabPage1.Controls.Add(this.btnDownloadUpdate);
             this.tabPage1.Controls.Add(this.btnRemove);
             this.tabPage1.Controls.Add(this.btnOpenFolder);
             this.tabPage1.Controls.Add(this.gameList);
@@ -186,10 +186,10 @@
             this.btnDownloadUpdate.Name = "btnDownloadUpdate";
             this.btnDownloadUpdate.Size = new System.Drawing.Size(122, 26);
             this.btnDownloadUpdate.TabIndex = 12;
-            this.btnDownloadUpdate.Text = "Home Page";
+            this.btnDownloadUpdate.Text = "讨论Q群:421752758";
             this.btnDownloadUpdate.UseMnemonic = false;
             this.btnDownloadUpdate.UseVisualStyleBackColor = false;
-            this.btnDownloadUpdate.Click += new System.EventHandler(this.btnDownloadUpdate_Click);
+            //this.btnDownloadUpdate.Click += new System.EventHandler(this.btnDownloadUpdate_Click);
             // 
             // btnRemove
             // 

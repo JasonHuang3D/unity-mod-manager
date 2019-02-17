@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mod_CrystalPowerUp", "Mods\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mod_AutoUtils", "Mods\Mod_AutoUtils\Mod_AutoUtils.csproj", "{10812782-F5EA-47B6-9614-15FF4730AAF8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PublishPackager", "PublishPackager\PublishPackager.csproj", "{CA3AABA7-E665-4900-B1C4-2B7FAF853093}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,14 @@ Global
 		{10812782-F5EA-47B6-9614-15FF4730AAF8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{10812782-F5EA-47B6-9614-15FF4730AAF8}.Release|x64.ActiveCfg = Release|Any CPU
 		{10812782-F5EA-47B6-9614-15FF4730AAF8}.Release|x64.Build.0 = Release|Any CPU
+		{CA3AABA7-E665-4900-B1C4-2B7FAF853093}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA3AABA7-E665-4900-B1C4-2B7FAF853093}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA3AABA7-E665-4900-B1C4-2B7FAF853093}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CA3AABA7-E665-4900-B1C4-2B7FAF853093}.Debug|x64.Build.0 = Debug|Any CPU
+		{CA3AABA7-E665-4900-B1C4-2B7FAF853093}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA3AABA7-E665-4900-B1C4-2B7FAF853093}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA3AABA7-E665-4900-B1C4-2B7FAF853093}.Release|x64.ActiveCfg = Release|Any CPU
+		{CA3AABA7-E665-4900-B1C4-2B7FAF853093}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

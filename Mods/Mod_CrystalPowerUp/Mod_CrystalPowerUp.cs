@@ -93,22 +93,22 @@ namespace Mod_CrystalPowerUp
     [HarmonyPatch(typeof(ItemThing), "SoulCrystalYouPowerUp")]
     public static class ItemThing_SoulCrystalYouPowerUp_Patch
     {
-        public static bool new_SoulCrystalYouPowerUp(ItemThing _this, float someFloat)
+        public static bool new_SoulCrystalYouPowerUp(ItemThing __instance, float someFloat)
         {
-            if (_this.Rate >= 12) return false;
+            if (__instance.Rate >= 12) return false;
 
             float rate = Main.settings.youToMax ? 1.0f : Main.settings.youRate / 100.0f;
 
             if (World.RandomRate(rate))
             {
-                ItemThing target = _this;
-                if (!Main.settings.youAllowStack && _this.Count > 1)
+                ItemThing target = __instance;
+                if (!Main.settings.youAllowStack && __instance.Count > 1)
                 {
-                    target = _this.Split(1, true);
-                    _this.map.DropItem(target, _this.Key, true, true, true, false, 0f);
+                    target = __instance.Split(1, true);
+                    __instance.map.DropItem(target, __instance.Key, true, true, true, false, 0f);
                     GameObject gameObject = UnityEngine.Object.Instantiate(Resources.Load("Effect/System/FlyLine")) as GameObject;
                     FlyLineRender component = gameObject.GetComponent<FlyLineRender>();
-                    component.Begin(_this.Pos, target.Pos, 0.2f, null);
+                    component.Begin(__instance.Pos, target.Pos, 0.2f, null);
                 }
 
                 int times = Main.settings.youToMax ? Math.Max(1, 12 - target.Rate) : 1;

@@ -123,9 +123,92 @@ namespace Mod_AutoUtils
         }
     }
 
+    [HarmonyPatch(typeof(Wnd_GameMain), "OnInit")]
+    public static class Wnd_GameMain_OnInit_Patch
+    {
+        public static void Postfix(Wnd_GameMain __instance)
+        {
+            __instance.UIInfo.m_n32.height = 300;
+        }
+    }
+
     [HarmonyPatch(typeof(Wnd_GameMain), "UpdateGridInfo")]
     public static class Wnd_GameMain_UpdateGridInfo_Patch
     {
+        private static void calcGridLingImpact(int gridKey, out float baseJulingValue, out float baseLingImpact)
+        {
+
+            Map map = WorldMgr.Instance.curWorld.map;
+
+            float baseLingValue = map.Ling.GetLing(gridKey);
+            baseJulingValue = map.Effect.GetEffect(gridKey, XiaWorld.g_emMapEffectKind.LingAddion, 0f, false);
+            float dBaseLing = baseLingValue - baseJulingValue;
+
+            float sumBasePredictLingValue = baseLingValue;
+            float sumLingAttenuation = 0.0f;
+
+            List<Thing> thingsAtBaseGrid = map.Things.GetThingsAtGrid(gridKey);
+            var listThingsImpactLing = new List<Thing>();
+            if (thingsAtBaseGrid != null)
+            {
+                foreach (Thing thing in thingsAtBaseGrid)
+                {
+                    if (thing != null && thing.def != null && thing.AtG && thing.Attenuation > 0f && thing.Absorption > 0f && thing.Accommodate > 0f && thing.IsValid && thing.CheckWorkingAfterPutdown())
+                    {
+                        sumLingAttenuation += thing.Attenuation;
+                        listThingsImpactLing.Add(thing);
+                    }
+                }
+            }
+          
+            TerrainDef terrainAtBaseGrid = map.Terrain.GetTerrain(gridKey);
+            if (terrainAtBaseGrid.Attenuation > 0.0f)
+                sumLingAttenuation += terrainAtBaseGrid.Attenuation;
+
+            List<int> neighborKeys = GridMgr.Inst.GetNeighbor(gridKey);
+
+            for (int i = 0; i < neighborKeys.Count; i++)
+            {
+                int neighborKey = neighborKeys[i];
+                float neighborLingValue = map.Ling.GetLing(neighborKey);
+
+                float dNeighborLing = neighborLingValue - map.Effect.GetEffect(neighborKey, g_emMapEffectKind.LingAddion, 0.0f, true);
+
+                if (dNeighborLing < 1.0f || dBaseLing >= dNeighborLing) continue;
+
+                float addLingValue = 0.0f;
+                float dNeighborBaseLing = dNeighborLing - dBaseLing;
+                if (dNeighborBaseLing >= 15.6f)
+                    addLingValue = dNeighborBaseLing / 1.3f;
+                else if (dNeighborBaseLing >= 2.4f)
+                    addLingValue = dNeighborBaseLing / 1.6f;
+                else if (dNeighborBaseLing >= 1.8f)
+                    addLingValue = Mathf.Pow(2.0f, dNeighborBaseLing * 5.0f - 10.0f) / 5.0f;
+                else if (dNeighborBaseLing >= 0.4f)
+                    addLingValue = 0.2f;
+                else
+                    addLingValue = 0.0f;
+
+                float lostLingValue = 0.0f;
+                float tempBaseLing = sumBasePredictLingValue;
+
+                foreach (Thing thing in listThingsImpactLing)
+                {
+                    if (tempBaseLing > 0f)
+                    {
+                        float thingAbsorpt = Mathf.Min(tempBaseLing, Mathf.Max(tempBaseLing - thing.LingV / thing.Accommodate, (float)thing.TempRate) * thing.Absorption * 0.004f);
+                        tempBaseLing -= thingAbsorpt;
+                        lostLingValue += thingAbsorpt;
+                    }
+                }
+                //there is no impact of NPCs, since npc's absorption only calculate once per update frame. When accessing this function, Npc's impact  has already been calculated.
+                sumBasePredictLingValue = Mathf.Max(0.0f, sumBasePredictLingValue + addLingValue * Mathf.Max(1.0f - sumLingAttenuation, 0.0f) - lostLingValue);
+            }
+
+
+            baseLingImpact = sumBasePredictLingValue - baseLingValue;
+        }
+
         public static void new_UpdateGridInfo(Wnd_GameMain __instance)
         {
             if (UI_WorldLayer.Instance == null)
@@ -148,18 +231,37 @@ namespace Mod_AutoUtils
                     float temperature = map.GetTemperature(mouseGridKey);
                     string terrainName = map.Terrain.GetTerrainName(mouseGridKey, true);
                     TerrainDef terrain = map.Terrain.GetTerrain(mouseGridKey);
-                    __instance.UIInfo.m_n32.text = string.Format("{0}{8}{6}\n{1}\n{2}\n{4}\n{3}{5}({7:f1}℃)", new object[]
+
+                    string lingQiString = "";
+                    if (Main.settings.showLing)
                     {
-                    map.Terrain.GetTerrainName(mouseGridKey, false),
-                    GameDefine.GetValueByMap<string>(GameDefine.FertilityDesc, map.GetFertility(mouseGridKey)),
-                    GameDefine.GetValueByMap<string>(GameDefine.BeautyDesc, map.GetBeauty(mouseGridKey, true)),
-                    GameDefine.GetValueByMap<string>(GameDefine.TemperatureDesc, temperature),
-                    GameDefine.GetValueByMap<string>(GameDefine.LightDesc, map.GetLight(mouseGridKey)),
-                    (AreaMgr.Instance.CheckArea(mouseGridKey, "Room") == null) ? string.Empty : "(室)",
-                    (!string.IsNullOrEmpty(terrainName)) ? ("(" + terrainName + ")") : string.Empty,
-                    temperature,
-                    (!terrain.IsWater || map.Snow.GetSnow(mouseGridKey) < 200) ? string.Empty : "(冰)"
-                    });
+
+                        calcGridLingImpact(mouseGridKey,  out float baseJulingValue, out float baseLingImpact);
+
+                        float baseLingEffectedValue = map.GetLing(mouseGridKey);
+
+                        lingQiString = string.Format("灵气值:{0}\n聚灵值:{1}\n灵气增幅:{2}", new object[]
+                        {
+                            baseLingEffectedValue.ToString(),
+                            baseJulingValue.ToString(),
+                            baseLingImpact.ToString()
+                        });
+
+                    }
+
+                    __instance.UIInfo.m_n32.text = string.Format("{0}{8}{6}\n{1}\n{2}\n{4}\n{3}{5}({7:f1}℃)\n{9}", new object[]
+                   {
+                        map.Terrain.GetTerrainName(mouseGridKey, false),
+                        XiaWorld.GameDefine.GetValueByMap<string>(XiaWorld.GameDefine.FertilityDesc, map.GetFertility(mouseGridKey)),
+                        XiaWorld.GameDefine.GetValueByMap<string>(XiaWorld.GameDefine.BeautyDesc, map.GetBeauty(mouseGridKey, true)),
+                        XiaWorld.GameDefine.GetValueByMap<string>(XiaWorld.GameDefine.TemperatureDesc, temperature),
+                        XiaWorld.GameDefine.GetValueByMap<string>(XiaWorld.GameDefine.LightDesc, map.GetLight(mouseGridKey)),
+                        (XiaWorld.AreaMgr.Instance.CheckArea(mouseGridKey, "Room") == null) ? string.Empty : "(室)",
+                        (!string.IsNullOrEmpty(terrainName)) ? ("(" + terrainName + ")") : string.Empty,
+                        temperature,
+                        (!terrain.IsWater || map.Snow.GetSnow(mouseGridKey) < 200) ? string.Empty : "(冰)",
+                        lingQiString
+                   });
                 }
                 else
                 {

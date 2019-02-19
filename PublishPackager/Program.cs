@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Ionic.Zip;
+using Newtonsoft.Json;
 
 namespace PublishPackager
 {
@@ -31,13 +32,21 @@ namespace PublishPackager
         public static string s_managerZipFilePath = Path.Combine(s_publishPath, "Manager_" + s_managerAppVersionName + ".zip");
 
 
+        public static string s_finalPublishVersion = "1_0_1";
+        public static string s_finalZipFilePath = Path.Combine(s_solutionPath, "Publish_" + s_finalPublishVersion + ".zip");
+
         static void Main(string[] args)
         {
             {
                 if (Directory.Exists(s_publishPath))
-                    Directory.Delete(s_publishPath, true);
+                    Directory.Delete(s_publishPath, true);// if you have the s_publishPath open in File Explorer, the Delete method may not be able to delete it. Thus will be throwing an expection of "The directory is not empty."
 
                 Directory.CreateDirectory(s_publishPath);
+
+
+                if (File.Exists(s_finalZipFilePath))
+                    File.Delete(s_finalZipFilePath);
+
             }
 
 
@@ -45,11 +54,12 @@ namespace PublishPackager
                 var mangerAppfiles = Directory.GetFiles(s_managerAppPath, "*.*")
                             .Where(s => s.EndsWith(".dll") || s.EndsWith(".exe") || s.EndsWith(".xml"));
 
-                var zip = new ZipFile();
-                zip.AddFiles(mangerAppfiles, false, "./");
-                zip.Save(s_managerZipFilePath);
+                using (var zip = new ZipFile())
+                {
+                    zip.AddFiles(mangerAppfiles, false, "./");
+                    zip.Save(s_managerZipFilePath);
+                }
                 Console.WriteLine(string.Format("App: '{0}' packed successfully", s_managerZipFilePath));
-
             }
 
             bool result = true;
@@ -68,11 +78,14 @@ namespace PublishPackager
 
                     if (File.Exists(modDllFilePath) && File.Exists(modInfoFilePath))
                     {
+                        var modInfo = JsonConvert.DeserializeObject<UnityModManagerNet.UnityModManager.ModInfo>(File.ReadAllText(modInfoFilePath));
+                        var versionFileName = "_" + modInfo.Version.Replace(".", "_");
 
-                        var modPublishPath = Path.Combine(s_publishPath, Path.Combine(s_modPublishPath, modName + ".zip"));
+                        var modPublishPath = Path.Combine(s_publishPath, Path.Combine(s_modPublishPath, modName + versionFileName + ".zip"));
+
                         using (var zip = new ZipFile())
                         {
-                            zip.AddFile(modDllFilePath,modName+"/");
+                            zip.AddFile(modDllFilePath, modName + "/");
                             zip.AddFile(modInfoFilePath, modName + "/");
                             zip.Save(modPublishPath);
                         }
@@ -88,9 +101,20 @@ namespace PublishPackager
                 }
 
             }
-
             if (!result) Console.ReadKey();
 
+
+            using (var finalZip = new ZipFile())
+            {
+                finalZip.AlternateEncoding = Encoding.Unicode;
+                finalZip.AddDirectory(s_publishPath, "./");
+
+                var introFilePath = Path.Combine(s_solutionPath, "README_INTRO.txt");
+                if (File.Exists(introFilePath))
+                    finalZip.AddFile(introFilePath, "./");
+
+                finalZip.Save(s_finalZipFilePath);
+            }
         }
         private static string[] GetFiles(string sourceFolder, string filters, System.IO.SearchOption searchOption)
         {

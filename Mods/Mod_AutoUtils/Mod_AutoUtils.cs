@@ -97,6 +97,8 @@ namespace Mod_AutoUtils
     {
         public static void Postfix(Npc __instance)
         {
+            if (!Main.enabled) return;
+
             if (Main.settings.autoSlaughtAnimals && !__instance.IsPlayerThing && __instance.Race.RaceType != g_emNpcRaceType.Wisdom && __instance.IsDeath)
             {
                 __instance.AddCommand("Slaughter", new object[0]);
@@ -291,6 +293,10 @@ namespace Mod_AutoUtils
 
             var injectedCodes = new List<CodeInstruction>
             {
+                new CodeInstruction(OpCodes.Ldsfld, typeof(Main).GetField("enabled")),
+                new CodeInstruction(OpCodes.Ldc_I4_0),
+                new CodeInstruction(OpCodes.Beq_S, 6),
+
                 new CodeInstruction(OpCodes.Ldarg_0),
                 new CodeInstruction(OpCodes.Call, typeof(Wnd_GameMain_UpdateGridInfo_Patch).GetMethod("new_UpdateGridInfo")),
                 new CodeInstruction(OpCodes.Ret)

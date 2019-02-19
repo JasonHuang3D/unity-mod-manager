@@ -2,7 +2,8 @@
   "Id": "Mod_CrystalPowerUp",
   "DisplayName": "淬助手",
   "Author": "JasonHuang",
-  "Version": "1.0.0",
+  "ManagerVersion": "0.13.0.1",
+  "Version": "1.1.0",
   "AssemblyName": "Mod_CrystalPowerUp.dll",
   "EntryMethod": "Mod_CrystalPowerUp.Main.Load"
 }

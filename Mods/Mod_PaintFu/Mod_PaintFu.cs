@@ -108,12 +108,16 @@ namespace Mod_PaintFu
             int startIndex = 0;
 
 
-            var injectedCodes = new List<CodeInstruction>();
+            var injectedCodes = new List<CodeInstruction>
+            {
+                new CodeInstruction(OpCodes.Ldsfld, typeof(Main).GetField("enabled")),
+                new CodeInstruction(OpCodes.Ldc_I4_0),
+                new CodeInstruction(OpCodes.Beq_S, 6),
 
-
-            injectedCodes.Add(new CodeInstruction(OpCodes.Ldarg_1));
-            injectedCodes.Add(new CodeInstruction(OpCodes.Call, typeof(Wnd_FuPatinter_OnSelectGong_Patch).GetMethod("new_OnSelectGong")));
-            injectedCodes.Add(new CodeInstruction(OpCodes.Ret));
+                new CodeInstruction(OpCodes.Ldarg_1),
+                new CodeInstruction(OpCodes.Call, typeof(Wnd_FuPatinter_OnSelectGong_Patch).GetMethod("new_OnSelectGong")),
+                new CodeInstruction(OpCodes.Ret)
+            };
 
             codes.InsertRange(startIndex, injectedCodes);
 
@@ -143,6 +147,10 @@ namespace Mod_PaintFu
 
             var injectedCodes = new List<CodeInstruction>
             {
+                new CodeInstruction(OpCodes.Ldsfld, typeof(Main).GetField("enabled")),
+                new CodeInstruction(OpCodes.Ldc_I4_0),
+                new CodeInstruction(OpCodes.Beq_S, 5),
+
                 new CodeInstruction(OpCodes.Call, typeof(Wnd_FuPatinter_QuickP_Patch).GetMethod("new_QuickP")),
                 new CodeInstruction(OpCodes.Ret)
             };

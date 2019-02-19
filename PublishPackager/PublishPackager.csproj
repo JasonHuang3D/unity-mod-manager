@@ -35,6 +35,9 @@
     <Reference Include="Ionic.Zip">
       <HintPath>..\lib\Ionic.Zip.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -65,7 +68,10 @@
     <ProjectReference Include="..\UnityModManagerApp\UnityModManagerApp.csproj">
       <Project>{6e8f8b45-2a2d-4e5a-8573-3559337e68f3}</Project>
       <Name>UnityModManagerApp</Name>
-      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\UnityModManager\UnityModManager.csproj">
+      <Project>{A1FCAE3E-523E-4E33-8860-DD39DDDF0F62}</Project>
+      <Name>UnityModManager</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
